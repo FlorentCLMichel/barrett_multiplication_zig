@@ -1,24 +1,24 @@
 const std = @import("std");
+const root = @import("root.zig");
 
 pub fn main() !void {
-    // Prints to stderr (it's a shortcut based on `std.io.getStdErr()`)
-    std.debug.print("All your {s} are belong to us.\n", .{"codebase"});
-
-    // stdout is for the actual output of your application, for example if you
-    // are implementing gzip, then only the compressed bytes should be sent to
-    // stdout, not any debugging messages.
     const stdout_file = std.io.getStdOut().writer();
     var bw = std.io.bufferedWriter(stdout_file);
     const stdout = bw.writer();
+    try stdout.print("Simple Barrett multiplication example.\n", .{});
+    try bw.flush();
 
-    try stdout.print("Run `zig build test` to run the tests.\n", .{});
+    // Initialize the Barrett multiplier
+    const q: u32 = 65537;
+    const multiplier = root.BarrettMultiplier(u32, u64).init(q);
 
-    try bw.flush(); // don't forget to flush!
-}
+    // RUn one multiplication
+    const a: u32 = 1000;
+    const b: u32 = 10000;
+    const c: u32 = 50000;
+    const z = multiplier.mul(multiplier.mul(a, b), c);
 
-test "simple test" {
-    var list = std.ArrayList(i32).init(std.testing.allocator);
-    defer list.deinit(); // try commenting this out and see if zig detects the memory leak!
-    try list.append(42);
-    try std.testing.expectEqual(@as(i32, 42), list.pop());
+    // Print the result
+    try stdout.print("{d} × {d} × {d} = {d} mod {d}\n", .{ a, b, c, z, q });
+    try bw.flush();
 }
