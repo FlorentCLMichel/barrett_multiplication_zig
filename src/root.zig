@@ -25,12 +25,12 @@ pub fn BarrettMultiplier(
         }
 
         pub fn mul(self: @This(), x: T1, y: T1) T1 {
-            const x2: T2 = @intCast(x);
-            const y2: T2 = @intCast(y);
+            const x2: T2 = x;
+            const y2: T2 = y;
             const z1: T2 = x2 * y2;
-            const z2: T2 = z1 >> @truncate(self.log_2_q - 1);
+            const z2: T2 = z1 >> @truncate(self.log_2_q);
             const z3: T2 = z2 * self.k;
-            const z4: T2 = z3 >> @truncate(self.log_2_q + 1);
+            const z4: T2 = z3 >> @truncate(self.log_2_q + 2);
             const z5: T2 = z1 - z4 * self.q;
             const c1: u2 = @as(u1, @bitCast(z5 >= self.q));
             const c2: u2 = @as(u1, @bitCast(z5 >= 2*self.q));
@@ -53,7 +53,7 @@ fn log2(comptime T: type, x: T) T {
 fn compute_k(comptime T1: type, comptime T2: type, q: T1, log_2_q: T1) T2 {
     const q_t2: T2 = @intCast(q);
     const one: T2 = 1;
-    return (one << @truncate(2 * log_2_q)) / q_t2;
+    return (one << @truncate(2 * log_2_q + 2)) / q_t2;
 }
 
 export fn add(a: i32, b: i32) i32 {
