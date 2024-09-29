@@ -12,7 +12,7 @@ pub fn main() !void {
     const q: u32 = 65537;
     const multiplier = root.BarrettMultiplier(u32, u64).init(q);
 
-    // RUn one multiplication
+    // Run one multiplication
     const a: u32 = 1000;
     const b: u32 = 10000;
     const c: u32 = 50000;
