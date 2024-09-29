@@ -1,7 +1,5 @@
 # Barrett multiplication in Zig
 
-**Work in progress**
-
 This is a very simple implementation of the [Barrett modular muliplication algorithm](https://en.wikipedia.org/wiki/Barrett_reduction) in [Zig](https://ziglang.org/). It is designed for simplicity rather than performance; in particular, it does not use vectorised operations which could significantly increase the throughput.
 
 ## Requirements
