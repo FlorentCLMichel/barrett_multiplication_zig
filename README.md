@@ -10,4 +10,4 @@ This is a very simple implementation of the [Barrett modular muliplication algor
 ## Build
 
 1. Ensure the Zig compiler is in your `PATH`
-2. Run `zig build` (or `make build`)
+2. Run `zig build` (or `make build`) to build in debug mode or `zig buils --release=fast` (or `make build-release`) for build in release mode
